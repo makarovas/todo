@@ -121,9 +121,9 @@ export default class TodoApp extends Component {
       case 'all':
         return items;
       case 'active':
-        return items.filter((item) => !items.done);
+        return items.filter((item) => !item.done);
       case 'done':
-        return items.filter((item) => items.done);
+        return items.filter((item) => item.done);
       default:
         return items;
     }
