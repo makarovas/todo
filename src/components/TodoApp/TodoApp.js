@@ -18,7 +18,7 @@ export default class TodoApp extends Component {
         this.createTodoItem('Learn English')
       ],
       term: '',
-      filter: '',
+      filter: 'all',
       
       userData: [
         {whatTodo: false}
@@ -98,6 +98,12 @@ export default class TodoApp extends Component {
     this.setState({term})
   };
   
+  onFilterChange = (filter) => {
+    this.setState({filter})
+  };
+  
+  
+  
   search = (items, term) => {
     if (term.length === 0) {
       return items;
@@ -128,7 +134,6 @@ export default class TodoApp extends Component {
     const {todoData, term, filter} = this.state;
     
     const visibleItems = this.filter(
-      
       this.search(todoData, term), filter);
     const doneCount = todoData.filter((el) => el.done).length;
     const todoCount = todoData.length - doneCount;
@@ -142,7 +147,10 @@ export default class TodoApp extends Component {
           <div className="row">
             <SearchPanel
               onSearchChange={this.onSearchChange}/>
-            <ItemStatusFilter filter={filter}/>
+            <ItemStatusFilter
+              filter={filter}
+              onFilterChange={this.onFilterChange}
+            />
           </div>
           <TodoList
             todos={visibleItems}
