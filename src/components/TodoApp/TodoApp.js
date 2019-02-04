@@ -3,6 +3,7 @@ import TodoList from '../todo-list/todo__list';
 import Header from '../header/header';
 import SearchPanel from '../search-panel/search-panel';
 import ItemAddForm from '../item-add-form/item-add-form';
+import ItemStatusFilter from "../item-status-filter/item-status-filter";
 
 
 export default class TodoApp extends Component {
@@ -54,7 +55,7 @@ export default class TodoApp extends Component {
         ...todoData,
         newItem
       ];
-  
+      
       return {
         todoData: newArr
       }
@@ -109,11 +110,26 @@ export default class TodoApp extends Component {
     })
   };
   
+  filter = (items, filter) => {
+    switch (filter) {
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((item) => !items.done);
+      case 'done':
+        return items.filter((item) => items.done);
+      default:
+        return items;
+    }
+  }
+  
   render() {
     
-    const {todoData, term} = this.state;
+    const {todoData, term, filter} = this.state;
     
-    const visibleItems = this.search(todoData, term);
+    const visibleItems = this.filter(
+      
+      this.search(todoData, term), filter);
     const doneCount = todoData.filter((el) => el.done).length;
     const todoCount = todoData.length - doneCount;
     
@@ -123,8 +139,11 @@ export default class TodoApp extends Component {
           <Header
             toDo={todoCount}
             done={doneCount}/>
-          <SearchPanel
-            onSearchChange={this.onSearchChange}/>
+          <div className="row">
+            <SearchPanel
+              onSearchChange={this.onSearchChange}/>
+            <ItemStatusFilter filter={filter}/>
+          </div>
           <TodoList
             todos={visibleItems}
             onDeleted={this.deleteItem}
