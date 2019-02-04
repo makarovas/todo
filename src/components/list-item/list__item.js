@@ -2,23 +2,6 @@ import React, {Component} from "react";
 import './list__item.css'
 
 export default class ListItem extends Component {
-  // onNameClick = () => {
-  //   this.setState(({done}) => {
-  //       return {
-  //         done: !done
-  //
-  //       }
-  //     }
-  //   )
-  // };
-  // onMarkImportant = () => {
-  //   this.setState(({important}) => {
-  //     return {
-  //       important: !important
-  //     }
-  //   })
-  // };
-
   render() {
     const {
       name,
